@@ -8,5 +8,5 @@ public interface RestaurantRepository {
 
     Restaurant findById(Long id);
 
-    void save(Restaurant restaurant);
+    Restaurant save(Restaurant restaurant);
 }
