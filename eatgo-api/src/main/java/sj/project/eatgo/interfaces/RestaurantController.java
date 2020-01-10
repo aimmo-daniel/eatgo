@@ -6,20 +6,14 @@ import org.springframework.web.bind.annotation.*;
 import sj.project.eatgo.application.RestaurantService;
 import sj.project.eatgo.domain.MenuItemRepository;
 import sj.project.eatgo.domain.Restaurant;
-import sj.project.eatgo.domain.RestaurantRepository;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 public class RestaurantController {
-
-    @Autowired
-    private RestaurantRepository restaurantRepository;
-
-    @Autowired
-    private MenuItemRepository menuItemRepository;
 
     @Autowired
     private RestaurantService restaurantService;
@@ -31,7 +25,7 @@ public class RestaurantController {
     }
 
     @GetMapping("/restaurants/{id}")
-    public Restaurant detail(@PathVariable("id") long id){
+    public Restaurant detail(@PathVariable("id") long id) {
         // 레스토랑 기본 정보 + 메뉴 정보
         Restaurant restaurant = restaurantService.getRestaurant(id);
         return restaurant;
@@ -39,15 +33,24 @@ public class RestaurantController {
 
     @PostMapping("/restaurants")
     public ResponseEntity<?> create(@RequestBody Restaurant resource) throws URISyntaxException {
-        String name = resource.getName();
-        String address = resource.getAddress();
 
-        Restaurant restaurant = new Restaurant(name, address);
-        restaurantService.addRestaurant(restaurant);
+        Restaurant restaurant = restaurantService.addRestaurant(
+                Restaurant.builder()
+                        .name(resource.getName())
+                        .address(resource.getAddress())
+                        .build()
+        );
 
         URI location = new URI("/restaurants/" + restaurant.getId());
         return ResponseEntity.created(location).body("{}");
     }
 
+    @PatchMapping("restaurants/{id}")
+    public String update(@PathVariable("id") long id, @RequestBody Restaurant resource) {
+        String name = resource.getName();
+        String address = resource.getAddress();
+        restaurantService.updateRestaurant(id, name, address);
+        return "{}";
+    }
 
 }
