@@ -1,8 +1,12 @@
 package sj.project.eatgo.domain;
 
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
-public interface MenuItemRepository {
+@Repository
+public interface MenuItemRepository extends CrudRepository<MenuItem, Long> {
 
     List<MenuItem> findAllByRestaurantId(Long restaurantId);
 

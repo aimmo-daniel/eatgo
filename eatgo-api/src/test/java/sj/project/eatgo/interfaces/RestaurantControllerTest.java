@@ -31,14 +31,14 @@ public class RestaurantControllerTest {
     @Autowired
     private MockMvc mvc;
 
+    @Autowired
+    MenuItemRepository menuItemRepository;
+
+    @Autowired
+    RestaurantRepository restaurantRepository;
+
     @MockBean
     private RestaurantService restaurantService;
-
-    @SpyBean(RestaurantRepositoryImpl.class)
-    private RestaurantRepository restaurantRepository;
-
-    @SpyBean(MenuItemRepositoryImp.class)
-    private MenuItemRepository menuItemRepository;
 
     @Test
     public void list() throws Exception {
