@@ -2,10 +2,7 @@ package sj.project.eatgo.application;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sj.project.eatgo.domain.MenuItem;
-import sj.project.eatgo.domain.MenuItemRepository;
-import sj.project.eatgo.domain.Restaurant;
-import sj.project.eatgo.domain.RestaurantRepository;
+import sj.project.eatgo.domain.*;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -30,7 +27,8 @@ public class RestaurantService {
     }
 
     public Restaurant getRestaurant(Long id) {
-        Restaurant restaurant = restaurantRepository.findById(id).orElse(null);
+        Restaurant restaurant = restaurantRepository.findById(id)
+                .orElseThrow(() -> new RestaurantNotFoundException(id));
 
         List<MenuItem> menuItems = menuItemRepository.findAllByRestaurantId(id);
         restaurant.setMenuItems(menuItems);

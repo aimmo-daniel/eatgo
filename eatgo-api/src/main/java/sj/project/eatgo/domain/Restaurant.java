@@ -1,11 +1,13 @@
 package sj.project.eatgo.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +23,14 @@ public class Restaurant {
     @GeneratedValue
     private long id;
 
+    @NotEmpty
     private String name;
+
+    @NotEmpty
     private String address;
 
     @Transient
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<MenuItem> menuItems;
 
     public Restaurant(String name, String address) {
