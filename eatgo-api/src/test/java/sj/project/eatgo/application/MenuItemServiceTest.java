@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import sj.project.eatgo.domain.MenuItem;
 import sj.project.eatgo.domain.MenuItemRepository;
 
