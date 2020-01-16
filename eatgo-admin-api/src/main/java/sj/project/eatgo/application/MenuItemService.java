@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sj.project.eatgo.domain.MenuItem;
 import sj.project.eatgo.domain.MenuItemRepository;
-import sj.project.eatgo.domain.RestaurantRepository;
 
 import java.util.List;
 
@@ -16,6 +15,10 @@ public class MenuItemService {
     @Autowired
     public MenuItemService(MenuItemRepository menuItemRepository) {
         this.menuItemRepository = menuItemRepository;
+    }
+
+    public List<MenuItem> getMenuItems(long restaurantId) {
+        return menuItemRepository.findAllByRestaurantId(restaurantId);
     }
 
     public void bulkUpdate(Long restaurandtId, List<MenuItem> menuItems) {
@@ -33,5 +36,4 @@ public class MenuItemService {
         menuItem.setRestaurantId(restaurandtId);
         menuItemRepository.save(menuItem);
     }
-
 }
