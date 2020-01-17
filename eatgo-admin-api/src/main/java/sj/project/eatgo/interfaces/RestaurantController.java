@@ -45,7 +45,7 @@ public class RestaurantController {
         return ResponseEntity.created(location).body("{}");
     }
 
-    @PatchMapping("restaurants/{id}")
+    @PatchMapping("/restaurants/{id}")
     public String update(@PathVariable("id") long id, @Valid @RequestBody Restaurant resource) {
         String name = resource.getName();
         String address = resource.getAddress();

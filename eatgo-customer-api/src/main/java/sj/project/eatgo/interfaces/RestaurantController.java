@@ -1,14 +1,10 @@
 package sj.project.eatgo.interfaces;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sj.project.eatgo.application.RestaurantService;
 import sj.project.eatgo.domain.Restaurant;
 
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 
 @CrossOrigin
@@ -19,8 +15,9 @@ public class RestaurantController {
     private RestaurantService restaurantService;
 
     @GetMapping("/restaurants")
-    public List<Restaurant> list() {
-        List<Restaurant> restaurants = restaurantService.getRestaurants();
+    public List<Restaurant> list(@RequestParam(value = "region", required = false) String region,
+                                 @RequestParam(value = "category", required = false) Long categoryId) {
+        List<Restaurant> restaurants = restaurantService.getRestaurants(region, categoryId);
         return restaurants;
     }
 
