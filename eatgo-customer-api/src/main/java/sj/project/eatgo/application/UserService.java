@@ -16,9 +16,12 @@ public class UserService {
 
     private UserRepository userRepository;
 
+    PasswordEncoder passwordEncoder;
+
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public User registerUser(String email, String name, String password) {
@@ -27,12 +30,25 @@ public class UserService {
             throw new EmailExistedException(email);
         }
 
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(password);
 
         User user = User.builder()
                 .email(email).name(name).password(encodedPassword).level(1L)
                 .build();
+
         return userRepository.save(user);
     }
+
+    public User authenticate(String email, String password) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new EmailNotExistedException(email));
+
+        // 비밀번호 비교 (유저가 입력한 비밀번호, DB에 저장된 비밀번호)
+        if(!passwordEncoder.matches(password, user.getPassword())) {
+            throw  new PasswordWrongException();
+        }
+
+        return user;
+    }
+
 }

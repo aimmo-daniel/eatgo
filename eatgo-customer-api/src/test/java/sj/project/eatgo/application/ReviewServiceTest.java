@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import sj.project.eatgo.application.ReviewService;
 import sj.project.eatgo.domain.Review;
 import sj.project.eatgo.domain.ReviewRepository;
 
