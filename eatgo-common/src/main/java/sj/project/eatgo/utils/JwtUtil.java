@@ -1,5 +1,6 @@
 package sj.project.eatgo.utils;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -22,5 +23,12 @@ public class JwtUtil {
                 .compact();
 
         return token;
+    }
+
+    public Claims getClaims(String token) {
+        return Jwts.parser()
+                .setSigningKey(key)
+                .parseClaimsJws(token) //sign이 포함된 jwt
+                .getBody();
     }
 }
