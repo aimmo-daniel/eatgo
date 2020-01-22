@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import sj.project.eatgo.application.UserService;
 import sj.project.eatgo.domain.User;
+import sj.project.eatgo.utils.JwtUtil;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -15,7 +16,10 @@ import java.net.URISyntaxException;
 public class SessionController {
 
     @Autowired
-    UserService userService;
+    private JwtUtil jwtUtil;
+
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/session")
     public ResponseEntity<SessionResponseDto> create(@RequestBody SessionRequestDto resource) throws URISyntaxException {
@@ -24,7 +28,7 @@ public class SessionController {
 
         User user = userService.authenticate(email, password);
 
-        String accessToken = user.getAccessToken();
+        String accessToken = jwtUtil.createToken(user.getId(), user.getName());
 
         String url = "/session";
         return ResponseEntity.created(new URI(url))
