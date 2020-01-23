@@ -5,8 +5,6 @@
       <profile default="true" name="Default" enabled="true" />
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="eatgo.eatgo-login-api.main" target="1.8" />
-      <module name="eatgo.eatgo-login-api.test" target="1.8" />
       <module name="sj.project.eatgo-api.main" target="1.8" />
       <module name="sj.project.eatgo-api.test" target="1.8" />
       <module name="sj.project.eatgo.main" target="1.8" />
